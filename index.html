@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K &amp; L · 我们的小站</title>
+  <meta name="description" content="K 和 L 的情侣小站 —— 记录我们的故事、相册与留言。Since 06.15 · ktllktll0615.cn">
+  <meta property="og:title" content="K & L · 我们的小站">
+  <meta property="og:description" content="我们的故事，未完待续。Since 06.15">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <!-- ============ 导航 ============ -->
+  <header class="nav" id="siteNav">
+    <nav class="nav-inner" aria-label="主导航">
+      <a class="nav-logo" href="#hero">K<span class="logo-heart" id="logoHeart" role="button" tabindex="0" aria-label="点我试试">❤</span>L</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="打开菜单">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#hero" class="nav-link">首页</a></li>
+        <li><a href="#time" class="nav-link">时光</a></li>
+        <li><a href="#story" class="nav-link">故事</a></li>
+        <li><a href="#gallery" class="nav-link">相册</a></li>
+        <li><a href="#board" class="nav-link">留言</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ============ 首屏 ============ -->
+    <section class="hero" id="hero">
+      <canvas id="heartsCanvas" aria-hidden="true"></canvas>
+      <div class="postmark" aria-hidden="true">
+        <span class="postmark-top">SINCE</span>
+        <span class="postmark-date">06·15</span>
+        <span class="postmark-bottom">FOREVER · KT&LL</span>
+      </div>
+      <div class="hero-content">
+        <p class="hero-eyebrow reveal">OUR LOVE STORY · KTLL0615</p>
+        <h1 class="hero-names reveal"><span class="hero-name" id="nameA">K</span><span class="amp">&amp;</span><span class="hero-name" id="nameB">L</span></h1>
+        <p class="hero-tagline reveal" id="tagline">执子之手 · 与子偕老</p>
+        <a class="btn btn-primary hero-cta reveal" href="#time">看看我们的故事</a>
+      </div>
+      <a class="scroll-hint" href="#time" aria-label="向下滚动">
+        <span class="scroll-mouse" aria-hidden="true"></span>
+      </a>
+    </section>
+
+    <!-- ============ 时光机 ============ -->
+    <div class="seal-divider" aria-hidden="true"><span class="wax-seal">♥</span></div>
+
+    <section class="section" id="time">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">TIME · 时光机</p>
+        <h2 class="section-title">爱还在一天天生长</h2>
+      </header>
+
+      <div class="stats-grid">
+        <article class="stat-card reveal">
+          <p class="stat-label">我们在一起</p>
+          <p class="stat-num" id="daysNum">—</p>
+          <p class="stat-unit">天</p>
+          <p class="stat-sub" id="hmsLive">00:00:00</p>
+        </article>
+        <article class="stat-card stat-card-rose reveal">
+          <p class="stat-label">下一个 6·15 纪念日</p>
+          <p class="stat-num" id="anniDays">—</p>
+          <p class="stat-unit">天后</p>
+          <p class="stat-sub" id="anniHMS">00:00:00</p>
+        </article>
+        <article class="stat-card reveal">
+          <p class="stat-label">这些天我为你心动</p>
+          <p class="stat-num" id="heartbeatNum">—</p>
+          <p class="stat-unit">次</p>
+          <p class="stat-sub">按每分钟 80 次偷偷算的</p>
+        </article>
+      </div>
+
+      <div class="milestones reveal" id="milestones" aria-label="恋爱里程碑"></div>
+    </section>
+
+    <!-- ============ 我们的故事 ============ -->
+    <section class="section section-alt" id="story">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">STORY · 我们的故事</p>
+        <h2 class="section-title">慢慢写，别着急</h2>
+      </header>
+      <ol class="timeline" id="timeline"><!-- JS 渲染 --></ol>
+    </section>
+
+    <!-- ============ 相册 ============ -->
+    <section class="section" id="gallery">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">GALLERY · 相册</p>
+        <h2 class="section-title">把喜欢的瞬间都钉在这里</h2>
+        <p class="section-tip">把照片按 <code>photo-1.jpg</code> ~ <code>photo-9.jpg</code> 放在和本页面同一个文件夹，就会自动出现～</p>
+      </header>
+      <div class="gallery-grid" id="galleryGrid"><!-- JS 渲染 --></div>
+    </section>
+
+    <!-- ============ 留言板 ============ -->
+    <section class="section section-alt" id="board">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">NOTES · 留言板</p>
+        <h2 class="section-title">想对TA说的话，写下来</h2>
+      </header>
+
+      <form class="board-form card reveal" id="boardForm" novalidate>
+        <div class="form-row">
+          <label class="label" for="msgName">署名</label>
+          <input class="input" id="msgName" name="name" type="text" maxlength="12" placeholder="TA的名字，或「匿名的小可爱」" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label class="label" for="msgText">想说的话</label>
+          <textarea class="input textarea" id="msgText" name="text" maxlength="200" rows="3" placeholder="比如：今天也想和你一起散步 💭" required></textarea>
+          <span class="char-count"><span id="charCount">0</span>/200</span>
+        </div>
+        <button class="btn btn-primary" type="submit">贴到留言板上</button>
+      </form>
+
+      <div class="notes-wall" id="notesWall" aria-live="polite"><!-- JS 渲染 --></div>
+    </section>
+  </main>
+
+  <!-- ============ 页脚 ============ -->
+  <footer class="footer">
+    <span class="wax-seal wax-seal-sm" aria-hidden="true">♥</span>
+    <p class="footer-line" id="footerLine">K ❤ L · Since 06·15</p>
+    <p class="footer-poem">愿我们的故事，一直写到白头</p>
+    <p class="footer-meta">© <span id="year">2026</span> ktllktll0615.cn · Made with ❤</p>
+  </footer>
+
+  <!-- ============ 灯箱 ============ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="查看照片" hidden>
+    <button class="lightbox-btn lightbox-close" id="lbClose" aria-label="关闭">✕</button>
+    <button class="lightbox-btn lightbox-prev" id="lbPrev" aria-label="上一张">‹</button>
+    <figure class="lightbox-figure">
+      <img id="lbImg" src="" alt="">
+      <div class="lightbox-ph" id="lbPh" hidden></div>
+      <figcaption id="lbCaption"></figcaption>
+    </figure>
+    <button class="lightbox-btn lightbox-next" id="lbNext" aria-label="下一张">›</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>
