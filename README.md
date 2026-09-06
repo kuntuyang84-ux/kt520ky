@@ -1,6 +1,6 @@
 # K & L · 情侣小站
 
-为 **ktllktll0615.cn** 准备的情侣网站，纯静态页面（HTML + CSS + JS），无需后端，任何支持静态文件的服务器都能跑。
+为 **ktllkyll0615.cn** 准备的情侣网站，纯静态页面（HTML + CSS + JS），无需后端，任何支持静态文件的服务器都能跑。
 
 ---
 
@@ -37,7 +37,7 @@ photo-9.jpg
 
 留言保存在**访客自己的浏览器**（localStorage）里，不需要服务器、数据库，零成本零维护。同一人在同一浏览器里留言永久保留；换设备/浏览器则看不到彼此的留言。如果以后想要"云端同步的留言板"，需要加后端或接入 LeanCloud 之类的服务，随时可以升级。
 
-## 四、部署上线（绑定 ktllktll0615.cn）
+## 四、部署上线（绑定 ktllkyll0615.cn）
 
 ### 方案 A：云服务器 + Nginx（推荐，国内访问快）
 
@@ -48,7 +48,7 @@ photo-9.jpg
 ```nginx
 server {
     listen 80;
-    server_name ktllktll0615.cn www.ktllktll0615.cn;
+    server_name ktllkyll0615.cn www.ktllkyll0615.cn;
     root /var/www/love;
     index index.html;
 }
@@ -78,9 +78,9 @@ server {
 2. Source 选 **Deploy from a branch**，Branch 选 **main**，目录 **/ (root)** → Save
 3. 等 1~2 分钟，页面顶部出现 `https://kuntuyang84-ux.github.io/love-site/` 即上线成功
 
-**第 3 步 · 绑定域名 ktllktll0615.cn**
+**第 3 步 · 绑定域名 ktllkyll0615.cn**
 
-1. GitHub 仓库 → Settings → Pages → **Custom domain** 填入 `ktllktll0615.cn` → Save
+1. GitHub 仓库 → Settings → Pages → **Custom domain** 填入 `ktllkyll0615.cn` → Save
    - 项目里的 `CNAME` 文件内容就是它，不用改
 2. 到你的**域名解析控制台**（在哪买的域名就去哪），添加解析记录：
 
