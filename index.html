@@ -1,157 +1,1186 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K &amp; L · 我们的小站</title>
-  <meta name="description" content="K 和 L 的情侣小站 —— 记录我们的故事、相册与留言。Since 06.15 · ktllkyll0615.cn">
-  <meta property="og:title" content="K & L · 我们的小站">
-  <meta property="og:description" content="我们的故事，未完待续。Since 06.15">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>KT · KY — 我们的家</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body { height:100%; }
+body {
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:#04060c; color:#dfe9f5; overflow:hidden;
+}
+button { font-family:inherit; cursor:pointer; border:none; }
+input { font-family:inherit; outline:none; }
+
+/* ================= 大门：深空 + 双星球 ================= */
+.cabin { position:fixed; inset:0; transition:opacity .5s ease, transform .5s ease; }
+.cabin.off { opacity:0; transform:scale(.96); pointer-events:none; }
+.deep {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 22% 18%, rgba(90,140,255,.13), transparent 46%),
+    radial-gradient(ellipse at 80% 78%, rgba(214,90,150,.11), transparent 48%),
+    radial-gradient(ellipse at 62% 30%, rgba(120,90,220,.10), transparent 42%),
+    linear-gradient(168deg, #05070f 0%, #0a0d1e 48%, #060812 100%);
+}
+#starcv { position:absolute; inset:0; }
+.vignette { position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 44%, transparent 50%, rgba(2,3,6,.5) 78%, rgba(1,1,3,.9) 100%); }
+.glass { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.glass::before { content:""; position:absolute; top:-20%; left:-32%; width:30%; height:150%;
+  background:linear-gradient(90deg, transparent, rgba(170,205,255,.05) 45%, rgba(225,240,255,.09) 50%, rgba(170,205,255,.05) 55%, transparent);
+  transform:rotate(16deg); animation:sweep 16s ease-in-out infinite; }
+@keyframes sweep { 0%,100%{ left:-34% } 50%{ left:108% } }
+
+/* 两颗星球 */
+.phot { position:absolute; transform:translate(-50%,-50%); text-align:center; cursor:pointer; z-index:2; }
+.phot .ballwrap { position:relative; width:clamp(104px,27vw,158px); margin:0 auto; }
+.phot .ball { position:relative; width:100%; aspect-ratio:1; border-radius:50%;
+  transition:transform .35s ease, box-shadow .35s ease; }
+.phot .ball::after { content:""; position:absolute; inset:0; border-radius:50%;
+  background:radial-gradient(circle at 62% 66%, rgba(0,0,0,.4) 0%, transparent 26%),
+             radial-gradient(circle at 22% 62%, rgba(0,0,0,.3) 0%, transparent 20%),
+             radial-gradient(circle at 56% 20%, rgba(255,255,255,.3) 0%, transparent 15%); }
+.phot-k { left:27%; top:31%; }
+.phot-k .ball {
+  background:radial-gradient(circle at 32% 28%, #b5d5ff 0%, #4a7fd9 36%, #1c3a78 70%, #081129 100%);
+  box-shadow:0 0 46px rgba(106,168,255,.38), inset -16px -14px 38px rgba(0,0,12,.72); }
+.phot-k .ring { position:absolute; left:50%; top:50%; width:174%; height:42%;
+  border-radius:50%; border:2px solid rgba(150,195,255,.34);
+  transform:translate(-50%,-50%) rotate(-17deg); pointer-events:none; }
+.phot-y { left:71%; top:63%; }
+.phot-y .ball {
+  background:radial-gradient(circle at 30% 26%, #ffd9e5 0%, #e8799f 36%, #8c2f57 70%, #24091a 100%);
+  box-shadow:0 0 46px rgba(255,143,179,.36), inset -16px -14px 38px rgba(24,0,10,.72); }
+.phot-y .ball::before { content:""; position:absolute; inset:-3px; border-radius:50%;
+  background:radial-gradient(circle at 74% 18%, rgba(255,205,224,.55) 0%, transparent 34%); }
+.phot:hover .ball, .phot:active .ball { transform:scale(1.06); }
+.phot-k:hover .ball { box-shadow:0 0 70px rgba(106,168,255,.6), inset -16px -14px 38px rgba(0,0,12,.72); }
+.phot-y:hover .ball { box-shadow:0 0 70px rgba(255,143,179,.58), inset -16px -14px 38px rgba(24,0,10,.72); }
+.phot .name { margin-top:16px; font-size:14px; letter-spacing:5px; color:rgba(232,240,255,.9); }
+.phot .tip { margin-top:5px; font-size:10px; letter-spacing:2px; color:rgba(150,170,205,.5); }
+.phot .hint { margin-top:5px; font-size:10px; letter-spacing:2px; color:rgba(150,170,205,.55); }
+
+.daybadge {
+  position:absolute; top:max(14px, env(safe-area-inset-top)); right:14px; z-index:5;
+  padding:8px 14px; border-radius:999px; font-size:11px; letter-spacing:1px; color:#8ea0c0;
+  background:rgba(6,10,16,.55); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.14);
+}
+.daybadge b { color:#ffd76a; font-size:17px; margin:0 3px; font-weight:700;
+  text-shadow:0 0 12px rgba(255,215,106,.5); }
+.plate { position:absolute; bottom:max(14px, env(safe-area-inset-bottom)); left:0; right:0;
+  text-align:center; font-family:ui-monospace,Consolas,monospace;
+  font-size:9px; letter-spacing:4px; color:#41506b; }
+
+/* ================= 密码弹窗 ================= */
+.mask { position:fixed; inset:0; z-index:20; background:rgba(2,4,9,.66);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  display:none; align-items:center; justify-content:center; }
+.mask.on { display:flex; animation:fadeIn .3s ease; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.modal { width:min(86vw,340px); padding:22px 22px 18px; border-radius:16px; text-align:center;
+  background:rgba(8,12,20,.85); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.14); box-shadow:0 24px 70px rgba(0,0,0,.55);
+  animation:popIn .35s ease; }
+@keyframes popIn { from{opacity:0; transform:translateY(14px) scale(.97)} to{opacity:1; transform:none} }
+.modal.k { border-color:rgba(106,168,255,.5); }
+.modal.y { border-color:rgba(255,143,179,.5); }
+.m-kick { font-family:ui-monospace,Consolas,monospace; font-size:10px; letter-spacing:4px; color:#6b7a9a; }
+.modal.k .m-kick { color:#7da6e8; } .modal.y .m-kick { color:#e89ab6; }
+.m-title { font-size:20px; font-weight:600; letter-spacing:5px; margin:9px 0 3px; color:#eef4ff; }
+.m-cd { font-family:ui-monospace,Consolas,monospace; font-size:11px; color:#7f92b8; letter-spacing:1px; }
+.m-cd b { color:#ffd76a; font-weight:600; }
+
+/* iOS 圆点式通行码 */
+.dots-wrap { margin-top:22px; display:flex; flex-direction:column; align-items:center; }
+.dots { display:flex; gap:12px; }
+.dots i {
+  width:15px; height:15px; border-radius:50%;
+  border:1.5px solid rgba(200,215,245,.5); background:rgba(4,8,12,.4);
+  transition:.18s;
+}
+.dots i.fill { background:#eaf2ff; border-color:#eaf2ff;
+  box-shadow:0 0 10px rgba(220,232,255,.7); transform:scale(1.12); }
+.modal.k .dots i.fill { background:#bcd2ff; border-color:#bcd2ff; box-shadow:0 0 12px rgba(106,168,255,.85); }
+.modal.y .dots i.fill { background:#ffc2d4; border-color:#ffc2d4; box-shadow:0 0 12px rgba(255,143,179,.85); }
+.dots-hint { margin-top:12px; font-size:11px; color:#5d6a85; letter-spacing:2px;
+  font-family:ui-monospace,monospace; min-height:14px; }
+.dots-hint.typing { color:#8fa2c8; }
+.dots.err i.fill { background:#ff9d7a; border-color:#ff9d7a; box-shadow:0 0 10px rgba(255,157,122,.5); }
+#pwReal { position:absolute; opacity:0; pointer-events:none; left:-9999px; }
+.pw-area { position:relative; }
+
+.m-err { color:#ff9d7a; font-size:12px; margin-top:8px; min-height:16px; letter-spacing:1px;
+  font-family:ui-monospace,monospace; }
+.m-cancel { margin-top:6px; background:transparent; color:#5d6a85; font-size:11px;
+  letter-spacing:2px; padding:6px 10px; }
+.m-cancel:hover { color:#9fb0d0; }
+@keyframes shake { 15%,85%{transform:translateX(-5px)} 30%,70%{transform:translateX(5px)} 45%{transform:translateX(-3px)} 60%{transform:translateX(3px)} }
+.modal.err { animation:shake .45s; }
+.modal.err input { border-color:#ff9d7a !important; }
+
+#toast { position:fixed; left:50%; bottom:12px; transform:translateX(-50%) translateY(14px);
+  background:rgba(6,10,16,.85); color:#cfe0f5; font-size:12px; padding:9px 16px; border-radius:8px;
+  border:1px solid rgba(255,255,255,.18); opacity:0; pointer-events:none; transition:.25s;
+  z-index:99; white-space:nowrap; }
+#toast.on { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ================= 舱室（毛坯） ================= */
+.room { display:none; position:fixed; inset:0; overflow-y:auto;
+  background:linear-gradient(180deg,#0a0e18,#0c1120 40%,#0a0e18); }
+.room.on { display:block; animation:pageIn .5s ease; }
+@keyframes pageIn { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none} }
+.room::before { content:""; position:fixed; top:-160px; left:50%; margin-left:-320px;
+  width:640px; height:340px; border-radius:50%; filter:blur(90px); opacity:.14;
+  background:var(--ac); pointer-events:none; }
+.room-k {
+  --ac:#6aa8ff; --ac2:#8a5bff;
+  background:
+    radial-gradient(ellipse at 78% -8%, rgba(106,168,255,.16), transparent 52%),
+    radial-gradient(ellipse at 8% 108%, rgba(138,91,255,.12), transparent 48%),
+    linear-gradient(180deg,#060a15,#0a101f 45%,#060a15);
+}
+#rkstars { position:fixed; inset:0; pointer-events:none; z-index:0; }
+#room-k .topbar, #room-k .wrap { position:relative; z-index:1; }
+.room-l { --ac:#ff8fb3; --ac2:#ff6f91; }
+.topbar { position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px; background:rgba(8,11,19,.72); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.07); }
+.who { font-size:16px; font-weight:700; color:#eef2fa; }
+.who .dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--ac);
+  box-shadow:0 0 10px var(--ac); margin-right:8px; vertical-align:2px; }
+.who small { display:block; font-size:11px; font-weight:400; color:#7683a0; margin-top:3px; letter-spacing:1px; }
+.logout { padding:7px 16px; border-radius:999px; font-size:12px; color:#aeb9d4;
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.14); transition:.2s; }
+.logout:hover { color:#fff; border-color:rgba(255,255,255,.3); }
+.wrap { max-width:520px; margin:0 auto; padding:16px 14px 46px; }
+.greet { padding:18px 4px 4px; color:#93a0b8; font-size:13.5px; line-height:1.8; }
+.greet b { color:#eef2fa; font-size:17px; letter-spacing:1px; }
+
+/* 照片存储 */
+.glasscard { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09);
+  border-radius:16px; padding:16px; margin-bottom:14px; }
+.album h3 { color:#eef2fa; font-size:15px; letter-spacing:1px; display:flex; align-items:center; gap:8px; }
+.album h3 .share { font-size:9px; letter-spacing:2px; color:#7fe3f0; border:1px solid rgba(127,227,240,.35);
+  padding:3px 8px; border-radius:999px; font-weight:400; }
+.room-l .album h3 .share { color:#ffb3cd; border-color:rgba(255,179,205,.35); }
+.album .desc { font-size:12px; color:#8a92a6; margin:6px 0 12px; line-height:1.6; }
+.tabs { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; }
+.tabs::-webkit-scrollbar { display:none; }
+.tab { flex-shrink:0; padding:7px 14px; border-radius:999px; font-size:13px;
+  background:rgba(255,255,255,.06); color:#93a0b8; border:1px solid transparent; }
+.tab.on { background:var(--ac); color:#fff; }
+.tab.add { border:1px dashed rgba(255,255,255,.22); background:transparent; color:#6b7690; }
+.uprow { margin:12px 0; }
+.btn-up { width:100%; padding:12px; border-radius:12px; font-size:14px; font-weight:600;
+  background:linear-gradient(90deg, var(--ac), var(--ac2)); color:#fff; }
+.btn-up:active { opacity:.85; }
+.up-note { font-size:11px; color:#7683a0; margin-bottom:12px; line-height:1.6; }
+.ph-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.ph { position:relative; aspect-ratio:1; border-radius:10px; overflow:hidden; background:#10141f; }
+.ph img { width:100%; height:100%; object-fit:cover; display:block; }
+.ph .x { position:absolute; top:4px; right:4px; width:22px; height:22px; border-radius:50%;
+  background:rgba(4,8,14,.72); color:#cdd6e8; font-size:13px; line-height:22px; text-align:center; }
+.ph .cat { position:absolute; left:5px; bottom:5px; font-size:9px; padding:2px 7px; border-radius:999px;
+  background:rgba(4,8,14,.68); color:#aeb9d4; letter-spacing:1px; }
+.album .empty { color:#5d6a85; font-size:12px; text-align:center; padding:18px 0; }
+
+/* 占位模块 */
+.mod-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.mod { position:relative; padding:14px; }
+.mod h4 { color:#dfe6f2; font-size:13.5px; letter-spacing:1px; }
+.mod p { color:#7683a0; font-size:11px; margin-top:5px; line-height:1.6; }
+.mod .tag { position:absolute; top:12px; right:12px; font-size:9px; letter-spacing:1px;
+  color:#8a92a6; border:1px solid rgba(255,255,255,.14); padding:2px 7px; border-radius:999px; }
+.sec-title { color:#5d6a85; font-size:11px; letter-spacing:3px; margin:20px 4px 10px; }
+
+/* ========== 盒子 & 小日历模块 ========== */
+.bx { padding:16px; margin-bottom:14px; }
+.bx h3 { color:#dfe6f2; font-size:14px; letter-spacing:1px; display:flex; align-items:center; gap:8px; }
+.bx h3 .bx-ic { width:22px; height:22px; border-radius:6px; display:inline-flex; align-items:center;
+  justify-content:center; font-size:11px; background:var(--ac); color:#fff; opacity:.92; flex-shrink:0; }
+.bx .bx-desc { color:#7683a0; font-size:11px; margin:6px 0 12px; line-height:1.65; }
+.bx textarea, .bx input[type=text], .bx input[type=date] {
+  width:100%; background:rgba(4,8,14,.55); border:1px solid rgba(255,255,255,.14);
+  border-radius:9px; color:#e8eef8; padding:10px 12px; font-size:13px; font-family:inherit;
+  outline:none; transition:.2s; }
+.bx textarea { min-height:74px; resize:vertical; line-height:1.7; }
+.bx textarea:focus, .bx input:focus { border-color:var(--ac); }
+.bx .row { display:flex; gap:8px; margin-top:10px; }
+.bx .row input[type=date] { flex:1; color-scheme:dark; }
+.btn-bx {
+  flex-shrink:0; padding:10px 16px; border-radius:9px; font-size:12.5px; font-weight:600;
+  color:#fff; background:linear-gradient(90deg, var(--ac), var(--ac2)); border:none; transition:.2s; }
+.btn-bx:disabled { opacity:.55; }
+.bx-list { margin-top:14px; display:flex; flex-direction:column; gap:10px; }
+.cap { border:1px solid rgba(255,255,255,.09); border-radius:11px; padding:12px 13px;
+  background:rgba(255,255,255,.03); }
+.cap.locked { border-style:dashed; }
+.cap .cap-top { display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#8a96b5; }
+.cap .st { font-size:10px; padding:3px 9px; border-radius:999px; letter-spacing:1px; }
+.cap.locked .st { background:rgba(255,215,106,.12); color:#ffd76a; }
+.cap.open .st { background:rgba(106,255,180,.1); color:#7dffb8; }
+.cap .cap-body { margin-top:9px; font-size:13px; color:#e6edf8; line-height:1.75;
+  white-space:pre-wrap; word-break:break-word; }
+.cap.locked .cap-body { color:#5d6a85; letter-spacing:3px; }
+.cap .cap-meta { margin-top:8px; font-size:10px; color:#5d6a85; letter-spacing:1px; }
+.qr-item { border-left:3px solid rgba(255,140,120,.55); }
+.qr-item.sent { border-left:3px solid rgba(120,220,170,.55); }
+.qr-act { display:flex; gap:8px; margin-top:10px; }
+.qr-act button { flex:1; padding:8px; border-radius:8px; font-size:11.5px; transition:.2s; }
+.qr-act .say { background:rgba(120,220,170,.12); color:#7de8ab; border:1px solid rgba(120,220,170,.35); }
+.qr-act .drop { background:rgba(255,140,120,.08); color:#ff9d8a; border:1px solid rgba(255,140,120,.3); }
+.qr-only { font-size:11px; color:#5d6a85; line-height:1.7; }
+.peer-mood {
+  padding:10px 12px; border-radius:9px; margin-bottom:12px; font-size:12px; color:#aab4c8;
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); line-height:1.7; }
+.peer-mood b { color:#ffd76a; }
+.pm-emoji { font-size:18px; vertical-align:-3px; margin-right:2px; }
+.pm-time { color:#5d6a85; font-size:10px; }
+.mood-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
+.mood-btn {
+  padding:8px 2px; border-radius:9px; border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04); display:flex; flex-direction:column; align-items:center;
+  gap:2px; transition:.2s; }
+.mood-btn .me { font-size:19px; }
+.mood-btn .mt { font-size:9.5px; color:#8a96b5; }
+.mood-btn:hover { background:rgba(255,255,255,.09); }
+.mood-btn.on { border-color:var(--ac); background:color-mix(in srgb, var(--ac) 16%, transparent);
+  box-shadow:0 0 12px color-mix(in srgb, var(--ac) 35%, transparent); }
+.mood-btn.on .mt { color:#fff; }
+.mood-mine { margin-top:10px; font-size:11.5px; color:#8a96b5; }
+.mood-mine b { color:#e8eef8; }
+.wish { display:flex; align-items:center; gap:9px; padding:9px 11px; border-radius:10px;
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); margin-bottom:7px; }
+.wish.done { opacity:.55; }
+.w-check { width:20px; height:20px; border-radius:50%; flex-shrink:0;
+  border:1.5px solid rgba(200,215,245,.45); background:transparent; transition:.2s;
+  font-size:11px; color:#7dffb8; line-height:1; }
+.w-check.checked { background:#3ddc97; border-color:#3ddc97; color:#04240f; }
+.w-text { flex:1; font-size:13px; color:#e6edf8; text-align:left; }
+.wish.done .w-text { text-decoration:line-through; color:#7683a0; }
+.w-who { font-size:10px; color:#5d6a85; flex-shrink:0; }
+.w-del { background:transparent; color:#3d4658; font-size:13px; padding:2px 4px; }
+.w-del:hover { color:#ff9d8a; }
+.msg { border-radius:11px; padding:11px 13px; background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08); }
+.msg.msg-k { border-left:3px solid #6aa8ff; }
+.msg.msg-l { border-left:3px solid #ff8fb3; }
+.msg-top { display:flex; align-items:center; gap:8px; font-size:10.5px; color:#7683a0; }
+.msg-who { font-weight:600; color:#aeb9d4; letter-spacing:1px; }
+.msg-ts { letter-spacing:1px; }
+.msg-del { margin-left:auto; background:transparent; color:#5d6a85; font-size:10px; padding:2px 6px; }
+.msg-del:hover { color:#ff9d8a; }
+.msg-body { margin-top:6px; font-size:13px; color:#e6edf8; line-height:1.75;
+  white-space:pre-wrap; word-break:break-word; }
+.msg-count { font-size:10px; color:#5d6a85; align-self:center; margin-right:auto; }
+.cal-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.cal-head b { color:#e8eef8; font-size:13.5px; letter-spacing:1px; }
+.cal-nav { display:flex; gap:6px; }
+.cal-nav button { width:28px; height:28px; border-radius:8px; background:rgba(255,255,255,.06);
+  color:#aeb9d4; border:1px solid rgba(255,255,255,.1); font-size:13px; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.cal-wd { text-align:center; font-size:10px; color:#5d6a85; padding:4px 0; }
+.cal-d { position:relative; aspect-ratio:1; border-radius:9px; display:flex; align-items:center;
+  justify-content:center; font-size:12px; color:#c6cfdf; background:rgba(255,255,255,.03);
+  cursor:pointer; transition:.15s; border:1px solid transparent; }
+.cal-d:hover { background:rgba(255,255,255,.07); }
+.cal-d.dim { color:#3d4658; cursor:default; background:transparent; }
+.cal-d.dim:hover { background:transparent; }
+.cal-d.today { border-color:var(--ac); color:#fff; font-weight:600; }
+.cal-d.sel { background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.35); }
+.cal-d.has-anniv { color:#ffd76a; }
+.cal-d .pt { position:absolute; bottom:5px; left:50%; transform:translateX(-50%);
+  width:4px; height:4px; border-radius:50%; }
+.cal-d .pt.ann { background:#ffd76a; box-shadow:0 0 5px rgba(255,215,106,.8); }
+.cal-d .pt.dia { background:#7fb0e8; }
+.cal-detail { margin-top:12px; border:1px solid rgba(255,255,255,.1); border-radius:11px;
+  padding:13px; background:rgba(255,255,255,.03); }
+.cal-detail h5 { color:#e8eef8; font-size:12.5px; letter-spacing:1px; margin-bottom:6px; }
+.cal-detail .d-ann { display:inline-block; font-size:10px; color:#ffd76a; background:rgba(255,215,106,.12);
+  padding:3px 9px; border-radius:999px; margin-bottom:8px; }
+.cal-detail .d-note { font-size:12px; color:#aab4c8; line-height:1.7; white-space:pre-wrap; }
+.cal-detail textarea { margin-top:8px; min-height:60px; }
+.cal-detail .d-photos { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
+.cal-detail .d-photos img { width:62px; height:62px; object-fit:cover; border-radius:8px; }
+.cal-detail .d-save { margin-top:8px; padding:8px 14px; }
+
+#toast { position:fixed; left:50%; bottom:12px; transform:translateX(-50%) translateY(14px);
+  background:rgba(6,10,16,.85); color:#cfe0f5; font-size:12px; padding:9px 16px; border-radius:8px;
+  border:1px solid rgba(255,255,255,.18); opacity:0; pointer-events:none; transition:.25s;
+  z-index:99; white-space:nowrap; }
+#toast.on { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#main">跳到主要内容</a>
 
-  <!-- ============ 导航 ============ -->
-  <header class="nav" id="siteNav">
-    <nav class="nav-inner" aria-label="主导航">
-      <a class="nav-logo" href="#hero">K<span class="logo-heart" id="logoHeart" role="button" tabindex="0" aria-label="点我试试">❤</span>L</a>
-      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="打开菜单">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-menu" id="navMenu">
-        <li><a href="#hero" class="nav-link">首页</a></li>
-        <li><a href="#time" class="nav-link">时光</a></li>
-        <li><a href="#story" class="nav-link">故事</a></li>
-        <li><a href="#gallery" class="nav-link">相册</a></li>
-        <li><a href="#board" class="nav-link">留言</a></li>
-      </ul>
-    </nav>
-  </header>
+<!-- ============ 大门：深空双星球 ============ -->
+<div class="cabin" id="cabin">
+  <div class="deep"></div>
+  <canvas id="starcv"></canvas>
+  <div class="vignette"></div>
+  <div class="glass"></div>
+  <div class="daybadge" id="daybadge"></div>
 
-  <main id="main">
-    <!-- ============ 首屏 ============ -->
-    <section class="hero" id="hero">
-      <canvas id="heartsCanvas" aria-hidden="true"></canvas>
-      <div class="postmark" aria-hidden="true">
-        <span class="postmark-top">SINCE</span>
-        <span class="postmark-date">06·15</span>
-        <span class="postmark-bottom">FOREVER · KT&LL</span>
-      </div>
-      <div class="hero-content">
-        <p class="hero-eyebrow reveal">OUR LOVE STORY · KTLL0615</p>
-        <h1 class="hero-names reveal"><span class="hero-name" id="nameA">K</span><span class="amp">&amp;</span><span class="hero-name" id="nameB">L</span></h1>
-        <p class="hero-tagline reveal" id="tagline">执子之手 · 与子偕老</p>
-        <a class="btn btn-primary hero-cta reveal" href="#time">看看我们的故事</a>
-      </div>
-      <a class="scroll-hint" href="#time" aria-label="向下滚动">
-        <span class="scroll-mouse" aria-hidden="true"></span>
-      </a>
-    </section>
-
-    <!-- ============ 时光机 ============ -->
-    <div class="seal-divider" aria-hidden="true"><span class="wax-seal">♥</span></div>
-
-    <section class="section" id="time">
-      <header class="section-head reveal">
-        <p class="section-eyebrow">TIME · 时光机</p>
-        <h2 class="section-title">爱还在一天天生长</h2>
-      </header>
-
-      <div class="stats-grid">
-        <article class="stat-card reveal">
-          <p class="stat-label">我们在一起</p>
-          <p class="stat-num" id="daysNum">—</p>
-          <p class="stat-unit">天</p>
-          <p class="stat-sub" id="hmsLive">00:00:00</p>
-        </article>
-        <article class="stat-card stat-card-rose reveal">
-          <p class="stat-label">下一个 6·15 纪念日</p>
-          <p class="stat-num" id="anniDays">—</p>
-          <p class="stat-unit">天后</p>
-          <p class="stat-sub" id="anniHMS">00:00:00</p>
-        </article>
-        <article class="stat-card reveal">
-          <p class="stat-label">这些天我为你心动</p>
-          <p class="stat-num" id="heartbeatNum">—</p>
-          <p class="stat-unit">次</p>
-          <p class="stat-sub">按每分钟 80 次偷偷算的</p>
-        </article>
-      </div>
-
-      <div class="milestones reveal" id="milestones" aria-label="恋爱里程碑"></div>
-    </section>
-
-    <!-- ============ 我们的故事 ============ -->
-    <section class="section section-alt" id="story">
-      <header class="section-head reveal">
-        <p class="section-eyebrow">STORY · 我们的故事</p>
-        <h2 class="section-title">慢慢写，别着急</h2>
-      </header>
-      <ol class="timeline" id="timeline"><!-- JS 渲染 --></ol>
-    </section>
-
-    <!-- ============ 相册 ============ -->
-    <section class="section" id="gallery">
-      <header class="section-head reveal">
-        <p class="section-eyebrow">GALLERY · 相册</p>
-        <h2 class="section-title">把喜欢的瞬间都钉在这里</h2>
-        <p class="section-tip">把照片按 <code>photo-1.jpg</code> ~ <code>photo-9.jpg</code> 放在和本页面同一个文件夹，就会自动出现～</p>
-      </header>
-      <div class="gallery-grid" id="galleryGrid"><!-- JS 渲染 --></div>
-    </section>
-
-    <!-- ============ 留言板 ============ -->
-    <section class="section section-alt" id="board">
-      <header class="section-head reveal">
-        <p class="section-eyebrow">NOTES · 留言板</p>
-        <h2 class="section-title">想对TA说的话，写下来</h2>
-      </header>
-
-      <form class="board-form card reveal" id="boardForm" novalidate>
-        <div class="form-row">
-          <label class="label" for="msgName">署名</label>
-          <input class="input" id="msgName" name="name" type="text" maxlength="12" placeholder="TA的名字，或「匿名的小可爱」" autocomplete="off">
-        </div>
-        <div class="form-row">
-          <label class="label" for="msgText">想说的话</label>
-          <textarea class="input textarea" id="msgText" name="text" maxlength="200" rows="3" placeholder="比如：今天也想和你一起散步 💭" required></textarea>
-          <span class="char-count"><span id="charCount">0</span>/200</span>
-        </div>
-        <button class="btn btn-primary" type="submit">贴到留言板上</button>
-      </form>
-
-      <div class="notes-wall" id="notesWall" aria-live="polite"><!-- JS 渲染 --></div>
-    </section>
-  </main>
-
-  <!-- ============ 页脚 ============ -->
-  <footer class="footer">
-    <span class="wax-seal wax-seal-sm" aria-hidden="true">♥</span>
-    <p class="footer-line" id="footerLine">K ❤ L · Since 06·15</p>
-    <p class="footer-poem">愿我们的故事，一直写到白头</p>
-    <p class="footer-meta">© <span id="year">2026</span> ktllkyll0615.cn · Made with ❤</p>
-  </footer>
-
-  <!-- ============ 灯箱 ============ -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="查看照片" hidden>
-    <button class="lightbox-btn lightbox-close" id="lbClose" aria-label="关闭">✕</button>
-    <button class="lightbox-btn lightbox-prev" id="lbPrev" aria-label="上一张">‹</button>
-    <figure class="lightbox-figure">
-      <img id="lbImg" src="" alt="">
-      <div class="lightbox-ph" id="lbPh" hidden></div>
-      <figcaption id="lbCaption"></figcaption>
-    </figure>
-    <button class="lightbox-btn lightbox-next" id="lbNext" aria-label="下一张">›</button>
+  <div class="phot phot-k" onclick="openPlanet('k')">
+    <div class="ballwrap">
+      <div class="ring"></div>
+      <div class="ball"></div>
+    </div>
+    <div class="name">坤 途</div>
+    <div class="hint">TAP · 登船</div>
   </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="phot phot-y" onclick="openPlanet('l')">
+    <div class="ballwrap">
+      <div class="ball"></div>
+    </div>
+    <div class="name">可 妍</div>
+    <div class="hint">TAP · 登船</div>
+  </div>
 
-  <script src="main.js"></script>
+  <div class="plate">KT and KY · 0615</div>
+</div>
+
+<!-- ============ 密码弹窗（iOS 圆点式） ============ -->
+<div class="mask" id="mask" onclick="if(event.target===this) closePlanet()">
+  <div class="modal" id="modal">
+    <div class="m-kick" id="m-kick"></div>
+    <div class="m-title" id="m-title"></div>
+    <div class="m-cd" id="m-cd"></div>
+    <div class="dots-wrap" id="dotsWrap">
+      <input type="tel" id="pwReal" autocomplete="off" inputmode="numeric">
+      <div class="dots" id="dots"></div>
+      <div class="dots-hint" id="dotsHint">输入 6 位通行码</div>
+    </div>
+    <div class="m-err" id="err"></div>
+    <button class="m-cancel" onclick="closePlanet()">← 返回星空</button>
+  </div>
+</div>
+
+<!-- ============ 杨坤途的舱室（星空） ============ -->
+<section class="room room-k" id="room-k">
+  <canvas id="rkstars"></canvas>
+  <header class="topbar">
+    <div class="who"><span class="dot"></span>杨坤途的房间<small>距 100 天 <span class="cd-mini"></span> 天 · 舱室样式随你定</small></div>
+    <button class="logout" onclick="logout()">退出</button>
+  </header>
+  <div class="wrap">
+    <div class="greet"><b class="greet-hi">晚上好，坤途。</b><br>这里是你的舱室 —— 布局和模块，按你的想法慢慢装。</div>
+
+    <div class="glasscard album">
+      <h3>照片 / 存储空间 <span class="share">SHARED · 共享</span></h3>
+      <div class="desc">上传自动压缩 · 她那边也能传也能看，照片带上传者署名</div>
+      <div class="tabs" id="tabs-k"></div>
+      <div class="uprow">
+        <input type="file" id="file-k" accept="image/*" multiple hidden>
+        <button class="btn-up" onclick="document.getElementById('file-k').click()">上传照片到「<span id="curcat-k">我们</span>」</button>
+      </div>
+      <div class="up-note">☁️ 云端已接通：照片实时共享 · 换手机也不丢 · 自动压缩省空间</div>
+      <div class="ph-grid" id="grid-k"></div>
+    </div>
+
+    <div id="mods-k"></div>
+    <div class="sec-title">— 之后慢慢装 —</div>
+    <div class="mod-grid">
+      <div class="mod glasscard"><h4>更多小惊喜</h4><p>等你想到新的点子，随时加</p><span class="tag">头脑风暴中</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 黄可妍的舱室（毛坯） ============ -->
+<section class="room room-l" id="room-l">
+  <header class="topbar">
+    <div class="who"><span class="dot"></span>黄可妍的房间<small>距 100 天 <span class="cd-mini"></span> 天 · 惊喜款待设计</small></div>
+    <button class="logout" onclick="logout()">退出</button>
+  </header>
+  <div class="wrap">
+    <div class="greet"><b>可妍到来，舱室自动亮灯。</b><br>这间房的最终样式有两种玩法：你来偷偷设计惊喜款，或者她自己做主 —— 你拍板。</div>
+
+    <div class="glasscard album">
+      <h3>照片 / 存储空间 <span class="share">SHARED · 共享</span></h3>
+      <div class="desc">她手机上传 → 自动压缩 → 选分类 —— 和你看到的是同一本相册</div>
+      <div class="tabs" id="tabs-l"></div>
+      <div class="uprow">
+        <input type="file" id="file-l" accept="image/*" multiple hidden>
+        <button class="btn-up" onclick="document.getElementById('file-l').click()">上传照片到「<span id="curcat-l">我们</span>」</button>
+      </div>
+      <div class="up-note">☁️ 云端已接通：照片实时共享 · 换手机也不丢 · 自动压缩省空间</div>
+      <div class="ph-grid" id="grid-l"></div>
+    </div>
+
+    <div id="mods-l"></div>
+    <div class="sec-title">— 之后慢慢装 —</div>
+    <div class="mod-grid">
+      <div class="mod glasscard"><h4>更多小惊喜</h4><p>等你想到新的点子，随时加</p><span class="tag">头脑风暴中</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 首次配置钥匙弹窗 ============ -->
+<div class="mask" id="keymask">
+  <div class="modal k">
+    <div class="m-kick">ONE-TIME SETUP · 只需一次</div>
+    <div class="m-title">仓库钥匙</div>
+    <div class="m-cd">粘贴你的 GitHub 钥匙，只保存在这台手机里</div>
+    <div class="m-form" style="margin-top:16px">
+      <input type="text" id="keyin" placeholder="github_pat_ 开头">
+      <button onclick="submitKey()">保存钥匙</button>
+    </div>
+    <div class="m-err" id="keyerr"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ========== 倒计时 ========== */
+const DAY100 = new Date('2026-09-23T00:00:00');
+const DAY0  = new Date('2026-06-15T00:00:00');
+function daysLeftNum(){
+  const now = new Date();
+  const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((DAY100 - t0) / 86400000);
+}
+/* 右上角：在一起天数（与 100 天倒计时同源：84+16=100） */
+(function(){
+  const now = new Date();
+  const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const days = Math.max(1, Math.round((t0 - DAY0) / 86400000));
+  document.getElementById('daybadge').innerHTML = '在一起 <b>' + days + '</b> 天';
+})();
+document.querySelectorAll('.cd-mini').forEach(e => {
+  const d = daysLeftNum();
+  e.textContent = d > 0 ? d : (100 - d);
+});
+
+/* ========== 大门星空 ========== */
+const cv = document.getElementById('starcv'), ctx = cv.getContext('2d');
+let W, H, stars = [];
+function cvResize(){
+  W = cv.width = innerWidth; H = cv.height = innerHeight;
+  stars = Array.from({length:130}, () => ({
+    x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.3+.35,
+    tw:Math.random()*6.28, ts:.4+Math.random()*1.4, dx:(Math.random()-.5)*.05 }));
+}
+function cvTick(){
+  if(document.getElementById('cabin').style.display !== 'none'){
+    ctx.clearRect(0,0,W,H);
+    for(const s of stars){
+      s.tw += .018*s.ts; s.x += s.dx;
+      if(s.x < 0) s.x = W; if(s.x > W) s.x = 0;
+      ctx.globalAlpha = Math.max(.07, Math.min(1, .3 + Math.sin(s.tw)*.36));
+      ctx.fillStyle = s.r > 1.1 ? '#e8f0ff' : '#ffffff';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill();
+    }
+  }
+  requestAnimationFrame(cvTick);
+}
+cvResize(); addEventListener('resize', cvResize); cvTick();
+
+/* ========== 星球 → 密码弹窗（iOS 圆点式） ========== */
+const DOORS = { '080113':'k', '050404':'l' };
+const PW_LEN = 6;
+let currentWho = null;
+let pwVal = '';
+
+const pwReal = document.getElementById('pwReal');
+const dotsBox = document.getElementById('dots');
+const dotsHint = document.getElementById('dotsHint');
+
+(function buildDots(){
+  dotsBox.innerHTML = '';
+  for(let i = 0; i < PW_LEN; i++) dotsBox.appendChild(document.createElement('i'));
+})();
+
+function renderDots(){
+  [...dotsBox.children].forEach((el, i) => el.classList.toggle('fill', i < pwVal.length));
+  if(pwVal.length === 0){ dotsHint.textContent = '输入 6 位通行码'; dotsHint.classList.remove('typing'); }
+  else { dotsHint.textContent = pwVal.length + ' / ' + PW_LEN; dotsHint.classList.add('typing'); }
+}
+
+pwReal.addEventListener('input', () => {
+  dotsBox.classList.remove('err');
+  document.getElementById('err').textContent = '';
+  pwVal = pwReal.value.replace(/\D/g, '').slice(0, PW_LEN);
+  pwReal.value = pwVal;
+  renderDots();
+  if(pwVal.length === PW_LEN) setTimeout(autoTry, 180);   // 输满自动校验
+});
+pwReal.addEventListener('keydown', e => {
+  if(e.key === 'Enter' && pwVal.length === PW_LEN) autoTry();
+});
+/* 点圆点区域即聚焦隐藏输入框（手机弹数字键盘） */
+document.getElementById('dotsWrap').addEventListener('click', () => pwReal.focus());
+
+function autoTry(){
+  const modal = document.getElementById('modal'), err = document.getElementById('err');
+  if(DOORS[pwVal] !== currentWho){
+    err.textContent = '通行码不对，这颗星球没认出你';
+    dotsBox.classList.add('err');
+    modal.classList.remove('err'); void modal.offsetWidth; modal.classList.add('err');
+    setTimeout(() => { pwVal = ''; pwReal.value = ''; dotsBox.classList.remove('err'); renderDots(); }, 620);
+    return;
+  }
+  err.textContent = '';
+  dotsHint.textContent = '✓ 引力确认 · 登船中';
+  const who = currentWho;
+  closePlanet();
+  enter(who);
+}
+
+function openPlanet(who){
+  currentWho = who;
+  const modal = document.getElementById('modal');
+  modal.classList.remove('k','y');
+  modal.classList.add(who);
+  document.getElementById('m-kick').textContent =
+    who === 'k' ? 'PLANET KT · 蓝色引力' : 'PLANET KY · 玫瑰引力';
+  document.getElementById('m-title').textContent = who === 'k' ? '坤途的房间' : '可妍的房间';
+  const d = daysLeftNum();
+  document.getElementById('m-cd').innerHTML =
+    d > 0 ? '距 100 天还有 <b>'+d+'</b> 天' :
+    (d === 0 ? '今天是我们在一起的 100 天' : '我们已经在一起 '+(100-d)+' 天');
+  pwVal = ''; pwReal.value = '';
+  document.getElementById('err').textContent = '';
+  dotsBox.classList.remove('err');
+  renderDots();
+  document.getElementById('mask').classList.add('on');
+  setTimeout(() => pwReal.focus(), 380);
+}
+function closePlanet(){
+  document.getElementById('mask').classList.remove('on');
+  currentWho = null;
+}
+
+/* ========== 转场进舱 ========== */
+function enter(room){
+  const cabin = document.getElementById('cabin');
+  cabin.classList.add('off');
+  setTimeout(() => {
+    cabin.style.display = 'none';
+    document.getElementById('room-'+room).classList.add('on');
+    if(room === 'k') rkResize();
+    renderAlbum(room);
+    window.scrollTo(0,0);
+    showToast('欢迎登船，'+(room==='k'?'坤途':'可妍'));
+  }, 520);
+}
+function logout(){
+  document.querySelectorAll('.room').forEach(r => r.classList.remove('on'));
+  const cabin = document.getElementById('cabin');
+  cabin.style.display = '';
+  requestAnimationFrame(() => cabin.classList.remove('off'));
+  window.scrollTo(0,0);
+}
+
+/* ========== 坤途舱室星空 ========== */
+const rk = document.getElementById('rkstars'), rkc = rk.getContext('2d');
+let rkS = [];
+function rkResize(){
+  rk.width = innerWidth; rk.height = innerHeight;
+  rkS = Array.from({length:70}, () => ({
+    x:Math.random()*rk.width, y:Math.random()*rk.height,
+    r:Math.random()*1.3+.4, tw:Math.random()*6.28,
+    ts:.4+Math.random()*1.2, dx:(Math.random()-.5)*.08 }));
+}
+function rkTick(){
+  if(document.getElementById('room-k').classList.contains('on')){
+    rkc.clearRect(0,0,rk.width,rk.height);
+    for(const s of rkS){
+      s.tw += .02*s.ts; s.x += s.dx;
+      if(s.x < 0) s.x = rk.width; if(s.x > rk.width) s.x = 0;
+      rkc.globalAlpha = Math.max(.08, Math.min(1, .3 + Math.sin(s.tw)*.38));
+      rkc.fillStyle = '#dfeaff';
+      rkc.beginPath(); rkc.arc(s.x, s.y, s.r, 0, 7); rkc.fill();
+    }
+  }
+  requestAnimationFrame(rkTick);
+}
+rkResize(); addEventListener('resize', rkResize); rkTick();
+
+/* ========== 照片存储（云端版：GitHub 仓库 + jsDelivr CDN） ========== */
+const CLOUD = {
+  token: '',
+  repo: 'kuntuyang84-ux/kt520ky',
+  branch: 'main',
+  raw: 'https://raw.githubusercontent.com/kuntuyang84-ux/kt520ky/main/',
+  api: 'https://api.github.com/repos/kuntuyang84-ux/kt520ky/contents/'
+};
+const CDN = 'https://cdn.jsdelivr.net/gh/kuntuyang84-ux/kt520ky@main/';
+
+let CATS = ['我们','旅行','日常'];
+let PHOTOS = [];
+let CAPSULES = [], QUARREL = [], CALD = {}, DIARY = {}, MESSAGES = [];
+let MOODS_STATE = {}, WISH = [];
+let dbSha = null;
+let dbLoading = false;
+
+/* 写操作需要钥匙：首次自动弹窗向用户要（存本机，之后免输） */
+let keyResolver = null;
+function askKey(){
+  return new Promise(res => {
+    keyResolver = res;
+    document.getElementById('keymask').classList.add('on');
+    setTimeout(() => document.getElementById('keyin').focus(), 300);
+  });
+}
+function submitKey(){
+  const v = document.getElementById('keyin').value.trim();
+  if(!v){ showToast('钥匙不能为空'); return; }
+  localStorage.setItem('cloud_key', v);
+  document.getElementById('keyin').value = '';
+  document.getElementById('keymask').classList.remove('on');
+  showToast('钥匙已保存到本机');
+  if(keyResolver){ keyResolver(v); keyResolver = null; }
+}
+
+async function cloudJSON(path, opts){
+  opts = opts || {};
+  const method = opts.method || 'GET';
+  let token = CLOUD.token || localStorage.getItem('cloud_key') || '';
+  if(method !== 'GET' && !token) token = await askKey();
+  const headers = { 'Accept':'application/vnd.github+json' };
+  if(token) headers['Authorization'] = 'Bearer ' + token;
+  if(opts.body) headers['Content-Type'] = 'application/json';
+  const r = await fetch(CLOUD.api + path + '?t=' + Date.now(), Object.assign({}, opts, { headers }));
+  if(!r.ok) throw new Error('GitHub ' + r.status);
+  return r.json();
+}
+
+function parseDB(db){
+  CATS = db.cats || CATS;
+  PHOTOS = (db.photos || []).map(p => Object.assign({}, p, { src: CDN + 'photos/' + p.file }));
+  CAPSULES = db.capsules || [];
+  QUARREL = db.quarrel || [];
+  CALD = db.calendar || {};
+  DIARY = db.diary || {};
+  MESSAGES = db.messages || [];
+  MOODS_STATE = db.moods || {};
+  WISH = db.wishlist || [];
+  if(!Object.keys(CALD).length){
+    CALD = { '01-13':{title:'坤途的生日'}, '04-04':{title:'可妍的生日'},
+             '06-15':{title:'在一起纪念日'}, '2026-09-23':{title:'在一起 100 天'} };
+  }
+}
+async function loadDB(){
+  dbLoading = true;
+  let ok = false;
+  try {   /* 优先 raw 直读（public 仓库免认证、不限流） */
+    const r = await fetch(CLOUD.raw + 'db.json?t=' + Date.now());
+    if(r.ok){ parseDB(await r.json()); ok = true; }
+  } catch(e){}
+  if(!ok){
+    try {   /* 兜底走 Contents API */
+      const d = await cloudJSON('db.json');
+      dbSha = d.sha;
+      parseDB(JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))))));
+      ok = true;
+    } catch(e){ console.warn('云端读取失败，本地缓存兜底', e); }
+  }
+  if(ok) localStorage.setItem('cache_db', JSON.stringify({ cats:CATS, photos:PHOTOS.map(p => ({ id:p.id, file:p.file, cat:p.cat, who:p.who, ts:p.ts })) }));
+  else {
+    try {
+      const c = JSON.parse(localStorage.getItem('cache_db') || 'null');
+      if(c){ CATS = c.cats || CATS; PHOTOS = (c.photos||[]).map(p => Object.assign({}, p, { src: CDN + 'photos/' + p.file })); }
+    } catch(_){}
+  }
+  dbLoading = false;
+}
+
+async function saveDB(msg){
+  if(!dbSha){   /* raw 直读不返回 sha：写入前补取一次 */
+    try { const d = await cloudJSON('db.json'); dbSha = d.sha; } catch(e){}
+  }
+  const db = { version:1, cats:CATS,
+    photos: PHOTOS.map(p => ({ id:p.id, file:p.file, cat:p.cat, who:p.who, ts:p.ts })),
+    capsules:CAPSULES, quarrel:QUARREL, calendar:CALD, diary:DIARY,
+    messages:MESSAGES, moods:MOODS_STATE, wishlist:WISH };
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(db))));
+  const body = { message: msg, content: content, branch: CLOUD.branch };
+  if(dbSha) body.sha = dbSha;
+  const d = await cloudJSON('db.json', { method:'PUT', body: JSON.stringify(body) });
+  dbSha = d.content.sha;
+}
+
+let curRoom = null;
+async function renderAlbum(room){
+  curRoom = room;
+  renderTabs(room); renderGrid(room);   // 先用缓存画一版
+  await loadDB();                        // 再拉云端最新
+  renderTabs(room); renderGrid(room);
+  renderMods(room);
+}
+
+/* ========== 秘密盒 · 吵架盒 · 小日历 ========== */
+function esc(s){ return (s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function fmtTs(ts){ const d = new Date(ts);
+  return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0')
+       + ' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+function fmtD(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function todayStr(){ return fmtD(new Date()); }
+function whoName(room){ return room === 'k' ? '坤途' : '可妍'; }
+
+function renderMods(room){
+  const box = document.getElementById('mods-' + room);
+  if(!box) return;
+  box.innerHTML =
+    '<div class="bx glasscard">'
+    + '<h3><span class="bx-ic">心</span>心情按钮</h3>'
+    + '<div class="bx-desc">点一个心情，' + (room==='k'?'她':'他') + '打开就能看到。</div>'
+    + '<div class="peer-mood" id="peer-mood-'+room+'"></div>'
+    + '<div class="mood-grid" id="mood-grid-'+room+'"></div>'
+    + '<div class="mood-mine" id="my-mood-'+room+'"></div></div>'
+
+    + '<div class="bx glasscard">'
+    + '<h3><span class="bx-ic">留</span>共享留言板</h3>'
+    + '<div class="bx-desc">写在这里的话，两个人都看得到——云端同步，落地不走丢。</div>'
+    + '<textarea id="msg-text-'+room+'" maxlength="500" placeholder="想说点什么……"></textarea>'
+    + '<div class="row"><span class="msg-count" id="msg-count-'+room+'">0 / 500</span>'
+    + '<button class="btn-bx" onclick="addMsg(\''+room+'\')">贴上去</button></div>'
+    + '<div class="bx-list" id="msg-list-'+room+'"></div></div>'
+
+    + '<div class="bx glasscard">'
+    + '<h3><span class="bx-ic">封</span>秘密盒子</h3>'
+    + '<div class="bx-desc">把暂时不能说的话写进来、选一个开启的日子——到期那天，两个人一起打开。</div>'
+    + '<textarea id="cap-text-'+room+'" placeholder="写给未来的我们……"></textarea>'
+    + '<div class="row"><input type="date" id="cap-date-'+room+'">'
+    + '<button class="btn-bx" onclick="addCapsule(\''+room+'\')">封存进盒子</button></div>'
+    + '<div class="bx-list" id="cap-list-'+room+'"></div></div>'
+
+    + '<div class="bx glasscard">'
+    + '<h3><span class="bx-ic">怒</span>吵架盒子</h3>'
+    + '<div class="bx-desc">上头的时候，先把话放进来。等平复了，再决定说，还是不说。只有你能看到自己的。</div>'
+    + '<textarea id="qr-text-'+room+'" placeholder="现在很生气？先写下来，别发出去……"></textarea>'
+    + '<div class="row"><button class="btn-bx" onclick="addQuarrel(\''+room+'\')">放进盒子冷静</button></div>'
+    + '<div class="bx-list" id="qr-list-'+room+'"></div></div>'
+
+    + '<div class="bx glasscard">'
+    + '<h3><span class="bx-ic">历</span>小日历</h3>'
+    + '<div class="bx-desc">重要的日子会发光 · 点任何一天：写日记、看那天的照片</div>'
+    + '<div class="cal-head"><b id="cal-y-'+room+'"></b>'
+    + '<div class="cal-nav"><button onclick="calNav(\''+room+'\',-1)">‹</button>'
+    + '<button onclick="calNav(\''+room+'\',1)">›</button></div></div>'
+    + '<div class="cal-grid" id="cal-grid-'+room+'"></div>'
+    + '<div id="cal-detail-'+room+'"></div></div>'
+
+    + '<div class="bx glasscard">'
+    + '<h3><span class="bx-ic">愿</span>见面愿望清单</h3>'
+    + '<div class="bx-desc">下次见面要干的事，想到就记——见面时一件一件打勾。</div>'
+    + '<div class="row"><input type="text" id="wish-text-'+room+'" maxlength="60" placeholder="想干的事……（比如：一起看海）">'
+    + '<button class="btn-bx" onclick="addWish(\''+room+'\')">加进清单</button></div>'
+    + '<div class="wish-list" id="wish-list-'+room+'"></div></div>';
+
+  const d = new Date(); d.setDate(d.getDate() + 30);
+  document.getElementById('cap-date-' + room).value = fmtD(d);
+  document.getElementById('msg-text-' + room).addEventListener('input', function(){
+    document.getElementById('msg-count-' + room).textContent = this.value.length + ' / 500';
+  });
+  renderMood(room); renderMsgs(room); renderCaps(room); renderQr(room); renderCal(room); renderWish(room);
+}
+
+/* --- 心情按钮 --- */
+const MOODS_SET = [['😊','开心'],['🥰','想你了'],['😔','有点难过'],['😤','上火了'],['😴','困成狗'],
+  ['💪','元气满满'],['🤔','在想事情'],['❤️','爱意满满'],['🍀','今天幸运'],['🫠','麻了']];
+function timeAgo(ts){
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if(s < 60) return '刚刚';
+  if(s < 3600) return Math.floor(s/60) + ' 分钟前';
+  if(s < 86400) return Math.floor(s/3600) + ' 小时前';
+  return Math.floor(s/86400) + ' 天前';
+}
+function renderMood(room){
+  const peer = room === 'k' ? 'l' : 'k';
+  const peerName = peer === 'k' ? '坤途' : '可妍';
+  const pm = MOODS_STATE[peer];
+  const box = document.getElementById('peer-mood-' + room);
+  if(box) box.innerHTML = pm && pm.mood
+    ? '<span class="pm-emoji">' + pm.mood.split(' ')[0] + '</span> ' + peerName + ' 现在是：<b>' + esc(pm.mood.split(' ').slice(1).join(' ')) + '</b><span class="pm-time">· ' + timeAgo(pm.ts) + '</span>'
+    : '<span class="pm-time">' + peerName + '还没点亮过心情</span>';
+  const my = MOODS_STATE[room];
+  const myBox = document.getElementById('my-mood-' + room);
+  if(myBox) myBox.innerHTML = '我的心情：' + (my && my.mood ? '<b>' + esc(my.mood) + '</b> <span class="pm-time">· ' + timeAgo(my.ts) + '</span>' : '<span style="color:#5d6a85">还没选，点上面点亮它</span>');
+  const grid = document.getElementById('mood-grid-' + room);
+  if(grid) grid.innerHTML = MOODS_SET.map((m, i) =>
+    '<button class="mood-btn' + (my && my.mood === (m[0]+' '+m[1]) ? ' on' : '') + '" onclick="setMood(\'' + room + '\',' + i + ')">'
+    + '<span class="me">' + m[0] + '</span><span class="mt">' + m[1] + '</span></button>').join('');
+}
+function setMood(room, idx){
+  const m = MOODS_SET[idx];
+  MOODS_STATE[room] = { mood: m[0] + ' ' + m[1], ts: Date.now() };
+  renderMood(room); renderMood(room === 'k' ? 'l' : 'k');
+  showToast('心情已点亮 · ' + whoName(room === 'k' ? 'l' : 'k') + '打开就能看到');
+  saveDB('mood: ' + whoName(room) + ' → ' + m[1]).catch(() => showToast('网络抖了，心情没存上'));
+}
+
+/* --- 见面愿望清单 --- */
+function renderWish(room){
+  const box = document.getElementById('wish-list-' + room);
+  if(!box) return;
+  if(!WISH.length){ box.innerHTML = '<div class="qr-only">清单还是空的——第一件想一起干的事，是什么？</div>'; return; }
+  const open = WISH.filter(w => !w.done).sort((a,b) => b.ts - a.ts);
+  const done = WISH.filter(w => w.done).sort((a,b) => (b.doneTs||0) - (a.doneTs||0));
+  let h = '';
+  h += open.map(w =>
+    '<div class="wish"><button class="w-check" onclick="toggleWish(\'' + w.id + '\')"></button>'
+    + '<span class="w-text">' + esc(w.text) + '</span><span class="w-who">' + esc(w.who) + '</span>'
+    + '<button class="w-del" onclick="delWish(\'' + w.id + '\')">×</button></div>').join('');
+  if(done.length){
+    h += '<div class="sec-title" style="margin:12px 4px 6px">— 已经完成的（' + done.length + '）—</div>';
+    h += done.map(w =>
+      '<div class="wish done"><button class="w-check checked" onclick="toggleWish(\'' + w.id + '\')">✓</button>'
+      + '<span class="w-text">' + esc(w.text) + '</span><span class="w-who">'
+      + (w.doneTs ? fmtD(new Date(w.doneTs)) : '') + '</span>'
+      + '<button class="w-del" onclick="delWish(\'' + w.id + '\')">×</button></div>').join('');
+  }
+  box.innerHTML = h;
+}
+async function addWish(room){
+  const t = document.getElementById('wish-text-' + room).value.trim();
+  if(!t){ showToast('先想一件想一起干的事'); return; }
+  WISH.push({ id:'w' + Date.now(), who: whoName(room), text: t, done: false, ts: Date.now() });
+  document.getElementById('wish-text-' + room).value = '';
+  renderWish(room); renderWish(room === 'k' ? 'l' : 'k');
+  try { await saveDB('wish: +1 愿望'); showToast('记下了 · 见面时打勾'); }
+  catch(e){ showToast('网络抖了，稍后再试'); }
+}
+async function toggleWish(id){
+  const w = WISH.find(x => x.id === id); if(!w) return;
+  w.done = !w.done; w.doneTs = w.done ? Date.now() : 0;
+  renderWish('k'); renderWish('l');
+  try { await saveDB(w.done ? 'wish: 完成一件' : 'wish: 反悔一件'); } catch(e){}
+}
+async function delWish(id){
+  if(!confirm('删掉这条愿望？')) return;
+  WISH = WISH.filter(x => x.id !== id);
+  renderWish('k'); renderWish('l');
+  try { await saveDB('wish: -1'); } catch(e){}
+}
+
+/* --- 共享留言板 --- */
+function renderMsgs(room){
+  const box = document.getElementById('msg-list-' + room);
+  if(!box) return;
+  const me = whoName(room);
+  if(!MESSAGES.length){
+    box.innerHTML = '<div class="qr-only">留言板还是空的——第一句话，留给她/他。</div>';
+    return;
+  }
+  box.innerHTML = [...MESSAGES].sort((a,b) => b.ts - a.ts).map(m =>
+    '<div class="msg msg-' + (m.who === '坤途' ? 'k' : 'l') + '">'
+    + '<div class="msg-top"><span class="msg-who">' + esc(m.who) + '</span>'
+    + '<span class="msg-ts">' + fmtTs(m.ts) + '</span>'
+    + (m.who === me ? '<button class="msg-del" onclick="delMsg(\'' + m.id + '\')">撤回</button>' : '')
+    + '</div>'
+    + '<div class="msg-body">' + esc(m.text) + '</div></div>').join('');
+}
+async function addMsg(room){
+  const t = document.getElementById('msg-text-' + room).value.trim();
+  if(!t){ showToast('写点再贴上来'); return; }
+  MESSAGES.push({ id:'m' + Date.now(), who: whoName(room), text: t, ts: Date.now() });
+  document.getElementById('msg-text-' + room).value = '';
+  document.getElementById('msg-count-' + room).textContent = '0 / 500';
+  renderMsgs('k'); renderMsgs('l');
+  try { await saveDB('msg: 留言 +1'); showToast('贴上去了 · 对方打开就能看到'); }
+  catch(e){ showToast('网络抖了，稍后再试'); }
+}
+async function delMsg(id){
+  if(!confirm('撤掉这条留言？')) return;
+  MESSAGES = MESSAGES.filter(m => m.id !== id);
+  renderMsgs('k'); renderMsgs('l');
+  try { await saveDB('msg: 留言 -1'); showToast('撤回了'); } catch(e){}
+}
+
+/* --- 秘密盒子 --- */
+function renderCaps(room){
+  const box = document.getElementById('cap-list-' + room);
+  if(!box) return;
+  const t = todayStr();
+  const list = [...CAPSULES].sort((a,b) => a.open < b.open ? -1 : 1);
+  if(!list.length){ box.innerHTML = '<div class="qr-only">盒子还是空的——第一颗胶囊，想好写给未来的什么了吗？</div>'; return; }
+  box.innerHTML = list.map(c => {
+    const open = c.open <= t;
+    const left = Math.ceil((new Date(c.open + 'T23:59:59') - new Date()) / 86400000);
+    const st = open ? '<span class="st">已开启</span>'
+             : (left <= 0 ? '<span class="st">今天开启</span>' : '<span class="st">还有 ' + left + ' 天开启</span>');
+    const body = open ? esc(c.text) : '（封存中 · 到期自动显现）';
+    return '<div class="cap ' + (open ? 'open' : 'locked') + '">'
+      + '<div class="cap-top"><span>开启日 ' + c.open + '</span>' + st + '</div>'
+      + '<div class="cap-body">' + body + '</div>'
+      + '<div class="cap-meta">' + esc(c.who) + ' 封存于 ' + fmtTs(c.ts) + '</div></div>';
+  }).join('');
+}
+async function addCapsule(room){
+  const t = document.getElementById('cap-text-' + room).value.trim();
+  const d = document.getElementById('cap-date-' + room).value;
+  if(!t || !d){ showToast('写点内容、选个开启的日子'); return; }
+  if(d <= todayStr()){ showToast('开启日期要选在今天之后呀'); return; }
+  CAPSULES.push({ id:'c' + Date.now(), who: whoName(room), open: d, text: t, ts: Date.now() });
+  document.getElementById('cap-text-' + room).value = '';
+  renderCaps(room); renderCaps(room === 'k' ? 'l' : 'k');
+  try { await saveDB('capsule: 封存一颗胶囊'); showToast('已封存 · ' + d + ' 一起打开'); }
+  catch(e){ showToast('网络抖了，稍后再试'); }
+}
+
+/* --- 吵架盒子 --- */
+function renderQr(room){
+  const box = document.getElementById('qr-list-' + room);
+  if(!box) return;
+  const me = whoName(room), other = room === 'k' ? '她' : '他';
+  const mine = QUARREL.filter(q => q.who === me && q.status === 'cooling').sort((a,b) => b.ts - a.ts);
+  const sent = QUARREL.filter(q => q.status === 'sent').sort((a,b) => b.ts - a.ts);
+  let h = '';
+  if(mine.length){
+    h += mine.map(q =>
+      '<div class="cap qr-item"><div class="cap-top"><span>冷却中 · ' + fmtTs(q.ts) + '</span></div>'
+      + '<div class="cap-body">' + esc(q.text) + '</div>'
+      + '<div class="qr-act"><button class="say" onclick="sayQuarrel(\'' + q.id + '\')">平复了，说给' + other + '</button>'
+      + '<button class="drop" onclick="dropQuarrel(\'' + q.id + '\')">算了，删掉</button></div></div>').join('');
+  } else {
+    h += '<div class="qr-only">你的盒子里没有正在冷却的话。没有消息，就是好消息。</div>';
+  }
+  if(sent.length){
+    h += '<div class="sec-title" style="margin:14px 4px 8px">— 冷静后说出的话（双方可见）—</div>'
+      + sent.map(q =>
+        '<div class="cap qr-item sent"><div class="cap-top"><span>' + esc(q.who) + ' · ' + fmtTs(q.ts) + '</span></div>'
+        + '<div class="cap-body">' + esc(q.text) + '</div></div>').join('');
+  }
+  box.innerHTML = h;
+}
+async function addQuarrel(room){
+  const t = document.getElementById('qr-text-' + room).value.trim();
+  if(!t){ showToast('先把想说的话写下来'); return; }
+  QUARREL.push({ id:'q' + Date.now(), who: whoName(room), text: t, ts: Date.now(), status: 'cooling' });
+  document.getElementById('qr-text-' + room).value = '';
+  renderQr(room); renderQr(room === 'k' ? 'l' : 'k');
+  try { await saveDB('quarrel: 放进一句'); showToast('已放进盒子 · 等你平复'); }
+  catch(e){ showToast('网络抖了，稍后再试'); }
+}
+async function sayQuarrel(id){
+  const q = QUARREL.find(x => x.id === id); if(!q) return;
+  if(!confirm('确定把这句话说给对方吗？说了就收不回了。')) return;
+  q.status = 'sent';
+  renderQr('k'); renderQr('l');
+  try { await saveDB('quarrel: 说出一句'); showToast('说出口了'); } catch(e){}
+}
+async function dropQuarrel(id){
+  if(!confirm('删掉这句话？气话嘛，删了就翻篇。')) return;
+  QUARREL = QUARREL.filter(x => x.id !== id);
+  renderQr('k'); renderQr('l');
+  try { await saveDB('quarrel: 删掉一句'); showToast('翻篇了'); } catch(e){}
+}
+
+/* --- 小日历 --- */
+const calState = {};
+const ANNIV = { '01-13':'坤途的生日', '04-04':'可妍的生日', '06-15':'在一起纪念日' };
+function dayOf(ts){ const d = new Date(ts);
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function renderCal(room){
+  const st = calState[room] || (calState[room] = { y:new Date().getFullYear(), m:new Date().getMonth(), sel:null });
+  const yT = document.getElementById('cal-y-' + room);
+  const grid = document.getElementById('cal-grid-' + room);
+  if(!yT || !grid) return;
+  yT.textContent = st.y + ' 年 ' + (st.m + 1) + ' 月';
+  const first = new Date(st.y, st.m, 1).getDay();
+  const dim = new Date(st.y, st.m + 1, 0).getDate();
+  const tStr = todayStr();
+  let h = ['日','一','二','三','四','五','六'].map(w => '<div class="cal-wd">' + w + '</div>').join('');
+  for(let i = 0; i < first; i++) h += '<div class="cal-d dim"></div>';
+  for(let d = 1; d <= dim; d++){
+    const dstr = st.y + '-' + String(st.m + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const ann = CALD[dstr.slice(5)] || CALD[dstr];
+    const hasDia = !!DIARY[dstr] || PHOTOS.some(p => dayOf(p.ts) === dstr);
+    const cls = ['cal-d'];
+    if(dstr === tStr) cls.push('today');
+    if(ann) cls.push('has-anniv');
+    if(st.sel === dstr) cls.push('sel');
+    const pt = ann && hasDia ? 'both' : ann ? 'ann' : hasDia ? 'dia' : '';
+    h += '<div class="' + cls.join(' ') + '" onclick="calPick(\'' + room + '\',\'' + dstr + '\')">'
+       + d + (pt ? '<span class="pt ' + pt + '"></span>' : '') + '</div>';
+  }
+  grid.innerHTML = h;
+}
+function calNav(room, dir){
+  const st = calState[room];
+  st.m += dir;
+  if(st.m < 0){ st.m = 11; st.y--; }
+  if(st.m > 11){ st.m = 0; st.y++; }
+  st.sel = null;
+  renderCal(room);
+  const d = document.getElementById('cal-detail-' + room); if(d) d.innerHTML = '';
+}
+function calPick(room, dstr){
+  calState[room].sel = dstr;
+  renderCal(room);
+  const box = document.getElementById('cal-detail-' + room);
+  if(!box) return;
+  const ann = CALD[dstr.slice(5)] || CALD[dstr];
+  const dayPhotos = PHOTOS.filter(p => dayOf(p.ts) === dstr).map(p => CDN + 'photos/' + p.file);
+  const note = DIARY[dstr] || '';
+  box.innerHTML = '<div class="cal-detail">'
+    + '<h5>' + dstr + (dstr === todayStr() ? ' · 今天' : '') + '</h5>'
+    + (ann ? '<div class="d-ann">纪念日 · ' + esc(ann.title) + '</div>' : '')
+    + '<div class="d-note">' + (note ? esc(note) : '<span style="color:#5d6a85">这一天还没有日记</span>') + '</div>'
+    + '<textarea id="dnote-' + room + '" placeholder="记下这一天……">' + esc(note) + '</textarea>'
+    + '<button class="btn-bx d-save" onclick="saveDiary(\'' + room + '\',\'' + dstr + '\')">保存日记</button>'
+    + (dayPhotos.length
+        ? '<div class="d-photos">' + dayPhotos.map(u => '<img src="' + u + '">').join('') + '</div>'
+        : '<div style="margin-top:8px;font-size:10px;color:#5d6a85">这一天相册里还没有照片</div>')
+    + '</div>';
+}
+async function saveDiary(room, dstr){
+  const t = document.getElementById('dnote-' + room).value.trim();
+  if(!t){ showToast('日记是空的'); return; }
+  DIARY[dstr] = t;
+  renderCal(room); renderCal(room === 'k' ? 'l' : 'k');
+  calPick(room, dstr);
+  try { await saveDB('diary: ' + dstr); showToast('日记已保存 · 云端同步'); }
+  catch(e){ showToast('网络抖了，稍后再试'); }
+}
+
+async function saveCats(room, name){
+  CATS.push(name);
+  renderTabs(room); renderTabs(room === 'k' ? 'l' : 'k');
+  try { await saveDB('db: 新增分类 ' + name); showToast('已保存 · 两边同步'); }
+  catch(e){ showToast('网络抖了，分类稍后重试'); }
+}
+
+function renderTabs(room){
+  const box = document.getElementById('tabs-'+room);
+  box.innerHTML = '';
+  CATS.forEach((c,i) => {
+    const b = document.createElement('button');
+    b.className = 'tab' + (i===0 ? ' on' : '');
+    b.textContent = c;
+    b.onclick = () => {
+      box.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+      b.classList.add('on');
+      document.getElementById('curcat-'+room).textContent = c;
+      renderGrid(room);
+    };
+    box.appendChild(b);
+  });
+  const add = document.createElement('button');
+  add.className = 'tab add';
+  add.textContent = '＋新建分类';
+  add.onclick = () => {
+    const name = (prompt('新分类名字（比如：海边、跨年）')||'').trim();
+    if(!name) return;
+    if(CATS.includes(name)){ showToast('已有这个分类啦'); return; }
+    saveCats(room, name);
+  };
+  box.appendChild(add);
+}
+
+function renderGrid(room){
+  const grid = document.getElementById('grid-'+room);
+  const cat = document.getElementById('curcat-'+room).textContent;
+  grid.innerHTML = '';
+  const list = PHOTOS.filter(p => p.cat === cat);
+  if(!list.length){
+    grid.innerHTML = '<div class="empty">这个分类还没有照片 —— 传第一张吧</div>';
+    return;
+  }
+  list.forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'ph';
+    d.innerHTML = '<img src="'+p.src+'" alt=""><div class="cat">'+(p.who||'')+'</div>'
+                + '<button class="x" title="删除">×</button>';
+    d.querySelector('.x').onclick = () => {
+      if(!confirm('删除这张照片？（云端也会删除）')) return;
+      delPhoto(p);
+    };
+    grid.appendChild(d);
+  });
+}
+
+async function delPhoto(p){
+  showToast('删除中…');
+  try {
+    const d = await cloudJSON('photos/' + p.file);
+    await cloudJSON('photos/' + p.file, { method:'DELETE', body: JSON.stringify({
+      message: 'photo: 删除 ' + p.file, sha: d.sha, branch: CLOUD.branch }) });
+  } catch(e){ console.warn('文件删除跳过（账本照删）', e); }
+  PHOTOS = PHOTOS.filter(x => x.id !== p.id);
+  try { await saveDB('db: 删除一张照片'); } catch(e){}
+  renderGrid('k'); renderGrid('l');
+  showToast('已删除');
+}
+
+/* 上传：压缩长边 1280 → PUT 仓库 → 更新账本（串行防冲突） */
+function compress(file){
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.createElement('canvas'), g = c.getContext('2d');
+        const s = Math.min(1, 1280/Math.max(img.width, img.height));
+        c.width = Math.round(img.width*s); c.height = Math.round(img.height*s);
+        g.drawImage(img, 0, 0, c.width, c.height);
+        res(c.toDataURL('image/jpeg', .82));
+      };
+      img.onerror = rej; img.src = e.target.result;
+    };
+    fr.onerror = rej; fr.readAsDataURL(file);
+  });
+}
+
+async function uploadOne(dataUrl, cat, room){
+  const file = 'photo-' + Date.now() + '-' + Math.random().toString(36).slice(2,6) + '.jpg';
+  await cloudJSON('photos/' + file, { method:'PUT', body: JSON.stringify({
+    message: 'photo: ' + (room==='k'?'坤途':'可妍') + ' 上传 · ' + cat,
+    content: dataUrl.split(',')[1], branch: CLOUD.branch }) });
+  const rec = { id:'p'+Date.now()+Math.random().toString(36).slice(2,6),
+    file, cat, who:(room==='k'?'坤途':'可妍'), ts:Date.now() };
+  PHOTOS.unshift(rec);
+  await saveDB('db: +1 照片 by ' + rec.who);
+}
+
+function bindUpload(room){
+  document.getElementById('file-'+room).addEventListener('change', async function(){
+    const files = [...this.files]; this.value = '';
+    if(!files.length || dbLoading) return;
+    const cat = document.getElementById('curcat-'+room).textContent;
+    const btn = document.querySelector('#room-'+room + ' .btn-up');
+    btn.disabled = true;
+    let ok = 0;
+    for(let i = 0; i < files.length; i++){
+      showToast('上传中 ' + (i+1) + '/' + files.length + ' …');
+      try {
+        const dataUrl = await compress(files[i]);
+        await uploadOne(dataUrl, cat, room);
+        ok++;
+        renderGrid('k'); renderGrid('l');
+      } catch(e){
+        console.error(e);
+        showToast('第 ' + (i+1) + ' 张没传上，网络抖了——稍后再试');
+      }
+    }
+    btn.disabled = false;
+    if(ok) showToast('已上传 ' + ok + ' 张 · 她那边打开就能看到');
+  });
+}
+bindUpload('k'); bindUpload('l');
+
+/* 问候语按时段 */
+(function(){
+  const h = new Date().getHours();
+  const hi = h < 5 ? '夜深了' : h < 11 ? '早上好' : h < 14 ? '中午好' : h < 18 ? '下午好' : '晚上好';
+  document.querySelector('#room-k .greet b').textContent = hi + '，坤途。';
+})();
+
+/* toast */
+let toastTimer;
+function showToast(m){
+  const t = document.getElementById('toast');
+  t.textContent = m; t.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('on'), 2000);
+}
+</script>
 </body>
 </html>
