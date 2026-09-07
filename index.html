@@ -1403,5 +1403,57 @@ function updateBadges(){
 })();
 </script>
 
+
+<!-- ============ v3.1 修复：进房不再弹钥匙窗；钥匙窗可关闭 ============ -->
+<script>
+/* 修复1：没存钥匙时，已读回执静默跳过，不弹窗挡屏幕；发消息时才要钥匙 */
+async function markRead(room){
+  const peer = room === 'k' ? 'l' : 'k';
+  let changed = false;
+  MESSAGES.forEach(m => {
+    if(m.who === whoName(peer)){
+      if(!m.readBy) m.readBy = { k:null, l:null };
+      if(!m.readBy[room]){ m.readBy[room] = Date.now(); changed = true; }
+    }
+  });
+  renderMsgs(room);
+  if(changed){
+    if(!localStorage.getItem('cloud_key')) return;  /* 没钥匙：只本地标记，不打扰 */
+    try { await saveDB('msg: 已读回执'); updateBadges(); } catch(e){}
+  }
+}
+
+/* 修复2：给钥匙弹窗加"先看看"按钮，不再卡死屏幕 */
+(function(){
+  const mask = document.getElementById('keymask');
+  if(mask && !mask.querySelector('.key-cancel')){
+    const btn = document.createElement('button');
+    btn.className = 'm-cancel key-cancel';
+    btn.textContent = '← 先看看留言（发消息时再设置钥匙）';
+    btn.onclick = function(){
+      mask.classList.remove('on');
+      if(typeof keyResolver !== 'undefined' && keyResolver){ keyResolver(''); keyResolver = null; }
+    };
+    const modal = mask.querySelector('.modal');
+    if(modal) modal.appendChild(btn);
+  }
+})();
+
+/* 修复3：留言板顶部加一行钥匙状态提示 */
+const _renderModsV31 = renderMods;
+renderMods = function(room){
+  _renderModsV31(room);
+  const box = document.getElementById('mods-' + room);
+  if(!box) return;
+  const hasKey = !!localStorage.getItem('cloud_key');
+  const desc = box.querySelector('.bx-desc');
+  if(desc && !hasKey){
+    desc.innerHTML = '两个人都看得到 · 对方看了会显示「已读」· 有新留言自动刷新<br><span style="color:#ffd76a">⚠️ 这台设备还没设置仓库钥匙：能看留言，但发消息时需要输入一次钥匙</span>';
+  }
+};
+/* 房间已开着的话立刻刷一次提示 */
+if(curRoom) renderMods(curRoom);
+</script>
+
 </body>
 </html>
