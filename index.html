@@ -695,14 +695,21 @@ async function saveDB(msg){
   if(!dbSha){   /* raw 直读不返回 sha：写入前补取一次 */
     try { const d = await cloudJSON('db.json'); dbSha = d.sha; } catch(e){}
   }
-  const db = { version:1, cats:CATS,
-    photos: PHOTOS.map(p => ({ id:p.id, file:p.file, cat:p.cat, who:p.who, ts:p.ts })),
-    capsules:CAPSULES, quarrel:QUARREL, calendar:CALD, diary:DIARY,
-    messages:MESSAGES, moods:MOODS_STATE, wishlist:WISH };
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(db))));
-  const body = { message: msg, content: content, branch: CLOUD.branch };
-  if(dbSha) body.sha = dbSha;
-  const d = await cloudJSON('db.json', { method:'PUT', body: JSON.stringify(body) });
+  const buildBody = () => {
+    const db = { version:1, cats:CATS,
+      photos: PHOTOS.map(p => ({ id:p.id, file:p.file, cat:p.cat, who:p.who, ts:p.ts })),
+      capsules:CAPSULES, quarrel:QUARREL, calendar:CALD, diary:DIARY,
+      messages:MESSAGES, moods:MOODS_STATE, wishlist:WISH };
+    return { message: msg, content: btoa(unescape(encodeURIComponent(JSON.stringify(db)))), branch: CLOUD.branch, sha: dbSha || undefined };
+  };
+  let d;
+  try {
+    d = await cloudJSON('db.json', { method:'PUT', body: JSON.stringify(buildBody()) });
+  } catch(e){          /* 账本被对方先写了一笔（sha 变了）：重新取指纹再试一次 */
+    dbSha = null;
+    try { const cur = await cloudJSON('db.json'); dbSha = cur.sha; } catch(e2){ throw e; }
+    d = await cloudJSON('db.json', { method:'PUT', body: JSON.stringify(buildBody()) });
+  }
   dbSha = d.content.sha;
 }
 
@@ -845,7 +852,11 @@ async function addWish(room){
   document.getElementById('wish-text-' + room).value = '';
   renderWish(room); renderWish(room === 'k' ? 'l' : 'k');
   try { await saveDB('wish: +1 愿望'); showToast('记下了 · 见面时打勾'); }
-  catch(e){ showToast('网络抖了，稍后再试'); }
+  catch(e){
+    WISH.pop();
+    renderWish(room); renderWish(room === 'k' ? 'l' : 'k');
+    showToast('⚠️ 没记上！检查网络或钥匙，再试一次');
+  }
 }
 async function toggleWish(id){
   const w = WISH.find(x => x.id === id); if(!w) return;
@@ -880,12 +891,19 @@ function renderMsgs(room){
 async function addMsg(room){
   const t = document.getElementById('msg-text-' + room).value.trim();
   if(!t){ showToast('写点再贴上来'); return; }
-  MESSAGES.push({ id:'m' + Date.now(), who: whoName(room), text: t, ts: Date.now() });
+  const rec = { id:'m' + Date.now(), who: whoName(room), text: t, ts: Date.now() };
+  MESSAGES.push(rec);
   document.getElementById('msg-text-' + room).value = '';
   document.getElementById('msg-count-' + room).textContent = '0 / 500';
   renderMsgs('k'); renderMsgs('l');
-  try { await saveDB('msg: 留言 +1'); showToast('贴上去了 · 对方打开就能看到'); }
-  catch(e){ showToast('网络抖了，稍后再试'); }
+  try {
+    await saveDB('msg: 留言 +1');
+    showToast('贴上去了 · 对方打开就能看到');
+  } catch(e){
+    MESSAGES = MESSAGES.filter(m => m.id !== rec.id);   /* 没发出去就撤下来，别假显示 */
+    renderMsgs('k'); renderMsgs('l');
+    showToast('⚠️ 没发出去！检查网络或钥匙，再试一次');
+  }
 }
 async function delMsg(id){
   if(!confirm('撤掉这条留言？')) return;
@@ -922,7 +940,11 @@ async function addCapsule(room){
   document.getElementById('cap-text-' + room).value = '';
   renderCaps(room); renderCaps(room === 'k' ? 'l' : 'k');
   try { await saveDB('capsule: 封存一颗胶囊'); showToast('已封存 · ' + d + ' 一起打开'); }
-  catch(e){ showToast('网络抖了，稍后再试'); }
+  catch(e){
+    CAPSULES.pop();
+    renderCaps(room); renderCaps(room === 'k' ? 'l' : 'k');
+    showToast('⚠️ 没封上！检查网络或钥匙，再试一次');
+  }
 }
 
 /* --- 吵架盒子 --- */
@@ -957,7 +979,11 @@ async function addQuarrel(room){
   document.getElementById('qr-text-' + room).value = '';
   renderQr(room); renderQr(room === 'k' ? 'l' : 'k');
   try { await saveDB('quarrel: 放进一句'); showToast('已放进盒子 · 等你平复'); }
-  catch(e){ showToast('网络抖了，稍后再试'); }
+  catch(e){
+    QUARREL.pop();
+    renderQr(room); renderQr(room === 'k' ? 'l' : 'k');
+    showToast('⚠️ 没放进去！检查网络或钥匙，再试一次');
+  }
 }
 async function sayQuarrel(id){
   const q = QUARREL.find(x => x.id === id); if(!q) return;
