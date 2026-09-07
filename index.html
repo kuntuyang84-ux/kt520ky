@@ -1210,5 +1210,198 @@ function showToast(m){
   toastTimer = setTimeout(() => t.classList.remove('on'), 2000);
 }
 </script>
+
+<!-- ============ v3 留言板专版补丁（旧功能代码全部保留，仅前端隐藏/覆盖） ============ -->
+<style>
+/* 隐藏：照片墙、问候语、占位模块 —— 代码不删，只是不显示 */
+.album, .greet, .wrap > .sec-title, .mod-grid { display:none !important; }
+.room .wrap { padding-top:20px; }
+/* 已读回执 */
+.msg-read { font-size:10px; color:#7de8ab; margin-left:auto; letter-spacing:1px; white-space:nowrap; }
+.msg-unread { font-size:10px; color:#8a96b5; margin-left:auto; letter-spacing:1px; white-space:nowrap; }
+/* 星球未读小红点 */
+.unread-badge {
+  position:absolute; top:2%; left:50%; transform:translateX(-50%);
+  min-width:20px; padding:2px 7px; border-radius:999px;
+  background:#ff5f7e; color:#fff; font-size:11px; font-weight:700;
+  box-shadow:0 0 12px rgba(255,95,126,.65); display:none; z-index:6;
+}
+</style>
+
+<script>
+/* ========== v3.0 留言板专版：免密码 · 已读回执 · 实时刷新 ========== */
+
+/* 1. 点星球直接登船，跳过密码 */
+openPlanet = function(who){ enter(who); };
+
+/* 2. 房间只装留言板 */
+function renderMods(room){
+  const box = document.getElementById('mods-' + room);
+  if(!box) return;
+  box.innerHTML =
+    '<div class="bx glasscard">'
+    + '<h3><span class="bx-ic">留</span>我们的留言板</h3>'
+    + '<div class="bx-desc">两个人都看得到 · 对方看了会显示「已读」· 有新留言自动刷新</div>'
+    + '<textarea id="msg-text-'+room+'" maxlength="500" placeholder="想说点什么……"></textarea>'
+    + '<div class="row"><span class="msg-count" id="msg-count-'+room+'">0 / 500</span>'
+    + '<button class="btn-bx" onclick="addMsg(\''+room+'\')">发出去</button></div>'
+    + '<div class="bx-list" id="msg-list-'+room+'"></div></div>';
+  document.getElementById('msg-text-' + room).addEventListener('input', function(){
+    document.getElementById('msg-count-' + room).textContent = this.value.length + ' / 500';
+  });
+  renderMsgs(room);
+}
+
+/* 3. 留言渲染：自己的留言显示「已读 / 未读」 */
+function renderMsgs(room){
+  const box = document.getElementById('msg-list-' + room);
+  if(!box) return;
+  const me = whoName(room);
+  const peerRoom = room === 'k' ? 'l' : 'k';
+  if(!MESSAGES.length){
+    box.innerHTML = '<div class="qr-only">留言板还是空的——第一句话，留给他/她。</div>';
+    return;
+  }
+  box.innerHTML = [...MESSAGES].sort((a,b) => b.ts - a.ts).map(m => {
+    let receipt = '';
+    if(m.who === me && m.readBy){
+      receipt = m.readBy[peerRoom]
+        ? '<span class="msg-read">✓ 对方已读</span>'
+        : '<span class="msg-unread">已发送 · 未读</span>';
+    }
+    return '<div class="msg msg-' + (m.who === '坤途' ? 'k' : 'l') + '">'
+      + '<div class="msg-top"><span class="msg-who">' + esc(m.who) + '</span>'
+      + '<span class="msg-ts">' + fmtTs(m.ts) + '</span>'
+      + receipt
+      + (m.who === me ? '<button class="msg-del" onclick="delMsg(\'' + m.id + '\')">撤回</button>' : '')
+      + '</div>'
+      + '<div class="msg-body">' + esc(m.text) + '</div></div>';
+  }).join('');
+}
+
+/* 4. 发留言：带上已读回执字段 */
+async function addMsg(room){
+  const inp = document.getElementById('msg-text-' + room);
+  const t = inp.value.trim();
+  if(!t){ showToast('写点再发出去'); return; }
+  const rec = { id:'m' + Date.now(), who: whoName(room), text: t, ts: Date.now(), readBy: { k:null, l:null } };
+  rec.readBy[room] = Date.now();   /* 自己发的算自己已读 */
+  MESSAGES.push(rec);
+  inp.value = '';
+  document.getElementById('msg-count-' + room).textContent = '0 / 500';
+  renderMsgs('k'); renderMsgs('l'); updateBadges();
+  try {
+    await saveDB('msg: 留言 +1');
+    showToast('发出去了 · 等对方看');
+  } catch(e){
+    MESSAGES = MESSAGES.filter(m => m.id !== rec.id);
+    renderMsgs('k'); renderMsgs('l');
+    showToast('⚠️ 没发出去！检查网络或钥匙，再试一次');
+  }
+}
+
+/* 5. 已读回执：进房间/刷新时，把对方发来的留言标记为我已读 */
+async function markRead(room){
+  const peer = room === 'k' ? 'l' : 'k';
+  let changed = false;
+  MESSAGES.forEach(m => {
+    if(m.who === whoName(peer)){
+      if(!m.readBy) m.readBy = { k:null, l:null };
+      if(!m.readBy[room]){ m.readBy[room] = Date.now(); changed = true; }
+    }
+  });
+  renderMsgs(room);
+  if(changed){
+    try { await saveDB('msg: 已读回执'); updateBadges(); } catch(e){}
+  }
+}
+
+/* 6. 实时刷新：房间里每 7 秒拉一次云端 */
+let pollTimer = null, pollCur = null, pollBusy = false;
+let seenMsgIds = new Set(), notifiedRead = new Set();
+
+const _enterV3 = enter;
+enter = function(room){
+  _enterV3(room);
+  setTimeout(() => {
+    pollCur = room;
+    seenMsgIds = new Set(MESSAGES.map(m => m.id));
+    markRead(room);
+    updateBadges();
+    if(pollTimer) clearInterval(pollTimer);
+    pollTimer = setInterval(pollTick, 7000);
+  }, 800);
+};
+const _logoutV3 = logout;
+logout = function(){
+  if(pollTimer){ clearInterval(pollTimer); pollTimer = null; }
+  pollCur = null;
+  _logoutV3();
+};
+
+async function pollTick(){
+  if(pollBusy || !pollCur) return;
+  pollBusy = true;
+  const room = pollCur, peer = room === 'k' ? 'l' : 'k';
+  const beforeIds = new Set(MESSAGES.map(m => m.id));
+  const beforeRead = {};
+  MESSAGES.forEach(m => beforeRead[m.id] = m.readBy ? JSON.parse(JSON.stringify(m.readBy)) : {});
+  try {
+    await loadDB();
+    renderMsgs(room);
+    /* 对方的新留言 */
+    const fresh = MESSAGES.filter(m => m.who === whoName(peer) && !beforeIds.has(m.id) && !seenMsgIds.has(m.id));
+    if(fresh.length){
+      seenMsgIds = new Set(MESSAGES.map(m => m.id));
+      showToast('💌 收到 ' + fresh.length + ' 条新留言');
+      flashTitle('💌 有新留言！');
+      markRead(room);
+    }
+    /* 我的留言被对方读了 */
+    MESSAGES.forEach(m => {
+      if(m.who === whoName(room)){
+        const was = beforeRead[m.id] && beforeRead[m.id][peer];
+        const now = m.readBy && m.readBy[peer];
+        if(!was && now && !notifiedRead.has(m.id)){
+          notifiedRead.add(m.id);
+          showToast('✓ 对方已读你的留言');
+        }
+      }
+    });
+    updateBadges();
+  } catch(e){}
+  pollBusy = false;
+}
+
+/* 7. 标题闪烁提醒 */
+let titleTimer = null;
+function flashTitle(t){
+  document.title = t;
+  clearTimeout(titleTimer);
+  titleTimer = setTimeout(() => document.title = 'KT · KY — 我们的家', 3000);
+}
+
+/* 8. 星球门上的未读小红点 */
+document.querySelectorAll('.phot').forEach(p => {
+  const who = p.classList.contains('phot-k') ? 'k' : 'l';
+  const b = document.createElement('div');
+  b.className = 'unread-badge'; b.id = 'ub-' + who;
+  p.appendChild(b);
+});
+function updateBadges(){
+  ['k','l'].forEach(room => {
+    const peer = room === 'k' ? 'l' : 'k';
+    const n = MESSAGES.filter(m => m.who === whoName(peer) && !(m.readBy && m.readBy[room])).length;
+    const el = document.getElementById('ub-' + room);
+    if(el){ el.style.display = n ? 'block' : 'none'; el.textContent = n > 99 ? '99+' : n; }
+  });
+}
+/* 大门界面也定时拉一次，未读数显示在星球上 */
+(async function cabinPoll(){
+  try { await loadDB(); updateBadges(); } catch(e){}
+  setInterval(async () => { try { await loadDB(); updateBadges(); } catch(e){} }, 15000);
+})();
+</script>
+
 </body>
 </html>
