@@ -342,7 +342,7 @@ input { font-family:inherit; outline:none; }
     <div class="hint">TAP · 登船</div>
   </div>
 
-  <div class="plate">KT and KY · 0615</div>
+  <div class="plate">KT and KY · 0615 · <span id="buildno"></span></div>
 </div>
 
 <!-- ============ 密码弹窗（iOS 圆点式） ============ -->
@@ -482,6 +482,8 @@ function cvTick(){
 cvResize(); addEventListener('resize', cvResize); cvTick();
 
 /* ========== 星球 → 密码弹窗（iOS 圆点式） ========== */
+const BUILD = 'v2.1-0920';
+document.getElementById('buildno').textContent = BUILD;
 const DOORS = { '080113':'k', '050404':'l' };
 const PW_LEN = 6;
 let currentWho = null;
